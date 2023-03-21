@@ -109,18 +109,18 @@ Once the merge is complete, the changes made in the feature branch will be incor
 ## Three-way merging
 ```mermaid
 graph LR
-  A(Main branch) -- git checkout -b feature --> B(Feature branch)
+  A(Main branch A) -- git checkout -b feature --> B(Feature branch)
   B -- "git add & commit" --> C(Feature branch)
   C -- "git push" --> D(Feature branch remote)
-  D -- "git checkout main" --> E(Main branch)
+  D -- "git checkout main" --> E(Main branch B)
   E -- git merge feature --> F{Merge conflict?}
   F --> |No| G(Commit changes)
   F --> |Yes| H(Resolve conflict)
   H --> G(Commit changes)
-  G -- "git add & commit" --> E(Main branch)
+  G -- "git add & commit" --> E(Main branch B)
 ```
 
-Three-way merging occurs when the target and source branches have diverged and Git needs to merge the changes made in both branches. Git identifies the common ancestor of the two branches and combines the changes made in each branch since that ancestor. In the flowchart above, a developer creates a feature branch from the main branch using the `git checkout -b` command. They can then make changes to the code in the feature branch and add and commit those changes using the `git add` and `git commit` commands. Once the changes are complete, the developer can push the changes to the remote feature branch using the "git push" command.
+Three-way merging occurs when the target and source branches have diverged and Git needs to merge the changes made in both branches. Git identifies the common ancestor of the two branches and combines the changes made in each branch since that ancestor. In the flowchart above, a developer creates a feature branch from the main branch using the `git checkout -b` command. They can then make changes to the code in the feature branch and add and commit those changes using the `git add` and `git commit` commands. Once the changes are complete, the developer can push the changes to the remote feature branch using the `git push` command.
 
 When the changes are ready to be merged into the main branch, the developer checks out the main branch and initiates a merge with the feature branch using the `git merge` command. If the changes made in the feature branch have diverged from the main branch, Git will perform a three-way merge.
 
@@ -133,18 +133,18 @@ After the merge is complete, the changes made in the feature branch will be inco
 ## Recursive merging
 ```mermaid
 graph LR
-  A(Main branch) -- git checkout -b feature --> B(Feature branch)
-  B -- git add & commit --> C(Feature branch)
-  C -- git push --> D(Feature branch remote)
+  A(Main branch A) -- git checkout -b featureA --> B(Feature branch A)
+  B -- git add & commit --> C(Commit feature branch A)
+  C -- git push --> D(FeatureA branch remote)
   D -- git checkout main --> E(Main branch)
-  E -- git merge feature --> F(Main branch)
-  F -- Merge conflict? --> |Yes| G(Resolve conflict)
-  G -- git add & commit --> H(Commit changes)
-  F -- |No| I(Complete merge)
-  I -- Merge conflict? --> |Yes| J(Recursive merge)
-  J -- Merge conflict? --> |Yes| K(Resolve conflict)
-  K -- git add & commit --> L(Commit changes)
-  J -- |No| M(Complete merge)
+  E -- git merge featureA featureB --> G{Merge conflict?}
+  G --> |Yes| H(Manual conflict resolution)
+  G --> |No| I(Commit changes)
+  H --> J{Merge conflict?}
+  I -- git add & commit --> E(Main branch)
+  J --> |Yes| K(Recursive merge)
+  K--> I(Commit changes)
+  J --> |No| I(Commit changes)
 ```
 Recursive merging is a variant of three-way merging that is used for merging complex branching structures. In the flowchart above, the steps leading up to the merge are identical to those in the three-way merge flowchart. However, if there are still conflicts remaining after the manual resolution step, Git will initiate a recursive merge.
 
