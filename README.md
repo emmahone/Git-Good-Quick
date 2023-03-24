@@ -24,13 +24,14 @@ The Git software development process involves several stages or states, includin
 - Remote Repository: This is the state where the committed changes are pushed from the local repository to a remote repository, such as GitHub or GitLab.
 - Pull Request: This is the state where a developer requests that their changes be reviewed and merged into the main branch of the remote repository.
 
+# Promoting code between states
 ```mermaid
 graph LR
     A[Working Directory] -- git add --> B(Staging Area)
     B -- git commit --> C(Local Repository)
     C -- git push --> D(Remote Repository)
 ```
-In the diagram above, the changes made in the working directory are added to the staging area using the "git add" command. Once the changes are in the staging area, they are committed to the local repository using the "git commit" command. Finally, the committed changes are pushed to the remote repository using the "git push" command.
+In the diagram above, the changes made in the working directory are added to the staging area using the `git add` command. Once the changes are in the staging area, they are committed to the local repository using the `git commit` command. Finally, the committed changes are pushed to the remote repository using the `git push` command.
 
 The transitions between these states are below:
 - Working Directory to Staging Area: A developer adds changes to the staging area using the `git add` command.
@@ -51,3 +52,104 @@ stateDiagram-v2
     Modified --> Untracked : git reset --hard
     Modified --> Committed : git commit
 ```
+Working locally using Git involves a few basic steps. Here's a general overview:
+
+1. Create a local repository: To start working locally with Git, you first need to create a local repository on your computer. You can do this by creating a new directory and running the "git init" command within that directory. This will create a new repository that you can use to manage your code.
+
+2. Create a branch: Before making any changes to your code, it's a good idea to create a new branch. This will allow you to work on your changes without affecting the main codebase. To create a new branch, use the "git checkout -b" command followed by the name of the new branch.
+
+3. Make changes: Once you've created a new branch, you can start making changes to the code. Use your favorite text editor or integrated development environment (IDE) to edit the code files as needed.
+
+4. Add changes: After you've made changes to the code, you need to tell Git which files you want to include in the next commit. Use the "git add" command to stage changes for the next commit. You can either add specific files using the file name, or you can add all changes using the "git add ." command.
+
+5. Commit changes: Once you've staged your changes, you can commit them to your local repository using the "git commit" command. When you commit changes, you should include a brief message that describes the changes you've made.
+
+6. Repeat steps 3-5 as needed: Continue working on your code, making changes, staging them, and committing them as needed. You can switch between branches using the "git checkout" command, and you can view your current branch and the status of your changes using the "git status" command.
+
+7. When you are happy with the contents of your local branch, push your changes to the remote repository. 
+
+# Branching
+```mermaid
+graph LR
+  A(Main branch) -- git checkout -b feature --> B(Feature branch)
+  B --> C{Make changes}
+  C --> D(Git add & commit)
+  D --> E(Git push)
+```
+In the diagram above, a developer creates a new feature branch from the main branch using the `git checkout -b feature` command. They can then make changes to the code in the feature branch and add and commit those changes using the `git add` and "git commit" commands. Once the changes are ready, the developer can push the changes to the feature branch using the `git push` command.
+
+The feature branch can continue to be developed and tested independently of the main branch. Once the feature is complete, it can be merged back into the main branch using a merge operation. This allows the changes made in the feature branch to be incorporated into the main branch without disrupting the development of other features or the main branch.
+
+Branching is the process of creating a new line of development that diverges from the main line of development, called the `master` branch. A branch can be thought of as a snapshot of the codebase at a particular point in time.
+
+Creating a branch in Git allows developers to work on new features or bug fixes without affecting the code in the main branch. Each branch can have its own commit history, changes, and version control. This enables developers to experiment with new ideas, collaborate on different features, and work on multiple tasks in parallel.
+
+When a developer creates a new branch, they can make changes to the code without affecting the code in the main branch. Once the changes are complete, they can be merged back into the main branch using a merge operation, combining the changes made in the branch with the changes made in the main branch.
+
+Git also supports multiple branches, so developers can create and manage different branches for different tasks and features. This enables developers to work on features independently without disrupting the development of other features or the main branch.
+
+# Merging
+In Git, merging is the process of combining changes from one branch (the `source branch`) into another branch (the `target branch`). The purpose of merging is to incorporate changes made in one branch into another branch, typically to integrate a new feature or fix a bug.
+
+There are several types of merging in Git, including:
+## Fast-forward merging
+```mermaid
+graph LR
+  A(Main branch) -- git checkout feature --> B(Feature branch)
+  B -- git add & commit --> C(Feature branch)
+  C -- git checkout main --> D(Main branch)
+  D -- git merge feature --> E(Main branch)
+```
+Fast-forward merging occurs when the target branch has not diverged from the source branch since the time the branch was created. In this case, Git simply moves the pointer of the target branch to the tip of the source branch. In the diagram above, a developer creates a feature branch from the main branch using the `git checkout` command. They can then make changes to the code in the feature branch and add and commit those changes using the `git add` and `git commit` commands. Once the changes are complete, the developer can checkout the main branch and initiate a merge with the feature branch using the `git merge` command.
+
+If the changes made in the feature branch have not diverged from the main branch since the feature branch was created, Git will perform a fast-forward merge. This means that the changes made in the feature branch will be incorporated into the main branch by simply moving the pointer of the main branch to the tip of the feature branch.
+
+Once the merge is complete, the changes made in the feature branch will be incorporated into the main branch, and the developer can continue to work on new features or bug fixes in the feature branch.
+
+## Three-way merging
+```mermaid
+graph LR
+  A(Main branch A) -- git checkout -b feature --> B(Feature branch)
+  B -- "git add & commit" --> C(Feature branch)
+  C -- "git push" --> D(Feature branch remote)
+  D -- "git checkout main" --> E(Main branch B)
+  E -- git merge feature --> F{Merge conflict?}
+  F --> |No| G(Commit changes)
+  F --> |Yes| H(Resolve conflict)
+  H --> G(Commit changes)
+  G -- "git add & commit" --> E(Main branch B)
+```
+
+Three-way merging occurs when the target and source branches have diverged and Git needs to merge the changes made in both branches. Git identifies the common ancestor of the two branches and combines the changes made in each branch since that ancestor. In the flowchart above, a developer creates a feature branch from the main branch using the `git checkout -b` command. They can then make changes to the code in the feature branch and add and commit those changes using the `git add` and `git commit` commands. Once the changes are complete, the developer can push the changes to the remote feature branch using the `git push` command.
+
+When the changes are ready to be merged into the main branch, the developer checks out the main branch and initiates a merge with the feature branch using the `git merge` command. If the changes made in the feature branch have diverged from the main branch, Git will perform a three-way merge.
+
+During the merge process, Git will attempt to automatically resolve any conflicts between the two branches. If Git is unable to resolve the conflicts automatically, it will pause the merge process and prompt the developer to resolve the conflicts manually using Git's conflict resolution tools.
+
+Once the conflicts have been resolved, the developer can add and commit the changes using the `git add` and `git commit` commands. If there were no conflicts, the merge can be completed immediately using the `git merge` command.
+
+After the merge is complete, the changes made in the feature branch will be incorporated into the main branch, and the developer can continue to work on new features or bug fixes in the feature branch.
+
+## Recursive merging
+```mermaid
+graph LR
+  A(Main branch A) -- git checkout -b featureA --> B(Feature branch A)
+  B -- git add & commit --> C(Commit feature branch A)
+  C -- git push --> D(FeatureA branch remote)
+  D -- git checkout main --> E(Main branch)
+  E -- git merge featureA featureB --> G{Merge conflict?}
+  G --> |Yes| H(Manual conflict resolution)
+  G --> |No| I(Commit changes)
+  H --> J{Merge conflict?}
+  I -- git add & commit --> E(Main branch)
+  J --> |Yes| K(Recursive merge)
+  K--> I(Commit changes)
+  J --> |No| I(Commit changes)
+```
+Recursive merging is a variant of three-way merging that is used for merging complex branching structures. In the flowchart above, the steps leading up to the merge are identical to those in the three-way merge flowchart. However, if there are still conflicts remaining after the manual resolution step, Git will initiate a recursive merge.
+
+A recursive merge is used when there are more than two branches to merge. In this case, Git will compare the changes made in both branches to a common ancestor and attempt to merge them in a way that preserves as much of the changes as possible.
+
+If Git is unable to automatically resolve the conflicts during a recursive merge, it will again pause the merge process and prompt the developer to resolve the conflicts manually. Once the conflicts have been resolved, the developer can add and commit the changes using the `git add` and `git commit` commands.
+
+If there were no conflicts, the merge can be completed immediately using the `git merge` command. If there are still conflicts after the recursive merge step, Git will continue to prompt the developer to resolve them manually until they have been resolved or the merge is abandoned.
