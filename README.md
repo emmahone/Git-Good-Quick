@@ -153,3 +153,78 @@ A recursive merge is used when there are more than two branches to merge. In thi
 If Git is unable to automatically resolve the conflicts during a recursive merge, it will again pause the merge process and prompt the developer to resolve the conflicts manually. Once the conflicts have been resolved, the developer can add and commit the changes using the `git add` and `git commit` commands.
 
 If there were no conflicts, the merge can be completed immediately using the `git merge` command. If there are still conflicts after the recursive merge step, Git will continue to prompt the developer to resolve them manually until they have been resolved or the merge is abandoned.
+
+# What is a git bisect?
+Git bisect is a command-line tool used to find the commit that introduced a specific bug or issue in a Git repository. It works by performing a binary search through the commit history of the repository, which involves dividing the range of commits to be searched in half repeatedly until the specific commit that introduced the issue is identified.
+
+To use Git bisect, you need to have a known "good" and "bad" commit in the repository. The "good" commit is a version of the codebase that did not have the bug, while the "bad" commit is a version of the codebase that has the bug. Git bisect then automatically checks out a middle commit between the "good" and "bad" commit and asks the user to test whether the bug is still present in that commit. Depending on the test result, Git bisect will narrow down the range of commits to search and repeat the process until it identifies the exact commit that introduced the bug.
+
+Using Git bisect can significantly reduce the time and effort required to find the commit that caused an issue, making it a valuable tool for debugging in large and complex codebases.
+
+# What does the git bisect workflow look like?
+```mermaid
+graph TD;
+    A(Start)-->B{Good and Bad Commit Identified?};
+    B-- Yes -->C{Bisecting Process Started?};
+    C-- Yes -->D{Test Intermediate Commit};
+    D-- Bug Found -->E{Mark Commit as Bad};
+    E-->B;
+    D-- Bug Not Found -->F{Mark Commit as Good};
+    F-->B;
+```
+
+Here's a high-level overview of the workflow for using Git bisect:
+
+1. Identify a known "good" commit: Start by identifying a commit in the Git repository that you know does not have the issue or bug you're trying to debug. You can identify this commit by checking out previous versions of the codebase or by asking other developers on your team.
+
+2. Identify a known "bad" commit: Similarly, identify a commit in the repository that you know has the issue or bug you're trying to debug. This can be a commit that you recently made, or one that was reported by a user or tester.
+
+3. Start the bisecting process: Use the `git bisect start` command to start the bisecting process. This tells Git that you want to find the commit that introduced the bug, and that you'll provide Git with a "good" and "bad" commit to start the search.
+
+4. Mark the good and bad commits: Use the `git bisect good <commit>` and `git bisect bad <commit>` commands to mark the known good and bad commits, respectively. Git will then use these commits to start the binary search.
+
+5. Test intermediate commits: Git will check out an intermediate commit between the good and bad commits. Test this commit to determine whether it has the bug or not.
+
+6. Mark the commit as good or bad: Depending on whether the intermediate commit has the bug or not, use the `git bisect good` or `git bisect bad` command to tell Git whether to search in the earlier or later half of the commit history.
+
+7. Repeat testing and marking: Repeat steps 5-6 until Git identifies the commit that introduced the bug.
+
+8. End the bisecting process: Once Git identifies the commit that introduced the bug, use the `git bisect reset` command to exit the bisecting process and return to the current branch.
+
+Overall, the workflow for using Git bisect involves identifying a good and bad commit, starting the bisecting process, testing intermediate commits, and marking each commit as good or bad until Git identifies the specific commit that introduced the issue.
+
+# What is cherry-pick in git?
+Git cherry-pick is a command that allows you to apply a specific commit from one Git branch to another. It is useful when you want to bring a single change from one branch into another, without merging the entire branch.
+
+Using Git cherry-pick, you can apply the changes made in a specific commit to the current branch you are on. You can also cherry-pick multiple commits by specifying their commit IDs.
+  
+# Cherry-pick workflow
+```mermaid
+graph TD;
+    A(Start)-->B{Identify Commit to Cherry-pick};
+    B-- Commit Identified -->C{Check Out Target Branch};
+    C-- Branch Checked Out -->D{Cherry-pick the Commit};
+    D-- Conflicts Found -->E{Resolve Conflicts};
+    E-- Conflicts Resolved -->F{Commit Changes};
+    F-- Changes Committed -->G{Review Changes};
+    G-- Changes Reviewed -->H{Push Changes};
+    H-- Changes Pushed -->I(End);
+```
+
+Here's a high-level overview of the workflow for using Git cherry-pick:
+
+1. Identify the commit to cherry-pick: Start by identifying the commit that contains the changes you want to apply to the current branch. You can use the `git log` command to find the commit ID of the desired commit.
+
+2. Check out the target branch: Use the `git checkout` command to switch to the branch that you want to apply the commit to.
+
+3. Cherry-pick the commit: Use the `git cherry-pick <commit-id>` command to apply the changes from the specified commit to the current branch. You can also cherry-pick multiple commits by listing their commit IDs after the cherry-pick command.
+
+4. Resolve conflicts: If there are any conflicts between the commit being cherry-picked and the changes in the current branch, Git will stop the cherry-pick process and ask you to resolve the conflicts manually. You can use tools like `git mergetool` or manually edit the conflicting files to resolve the conflicts.
+
+5. Commit the changes: Once you have resolved any conflicts, use the `git commit` command to create a new commit that includes the changes from the cherry-picked commit.
+
+6. Review the changes: Use the `git diff` command to review the changes made by the cherry-pick operation.
+
+7. Push the changes: If you are satisfied with the changes, use the git push command to push the changes to the remote repository and make them available to other developers.
+
+Overall, the workflow for using Git cherry-pick involves identifying the commit to cherry-pick, checking out the target branch, cherry-picking the commit, resolving any conflicts, committing the changes, reviewing the changes, and pushing the changes to the remote repository.
