@@ -171,8 +171,6 @@ graph TD;
     E-->B;
     D-- Bug Not Found -->F{Mark Commit as Good};
     F-->B;
-    C-- No -->G{Exit Bisecting Process};
-    G-->A(End);
 ```
 
 Here's a high-level overview of the workflow for using Git bisect:
