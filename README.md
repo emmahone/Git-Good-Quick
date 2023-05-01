@@ -154,6 +154,90 @@ If Git is unable to automatically resolve the conflicts during a recursive merge
 
 If there were no conflicts, the merge can be completed immediately using the `git merge` command. If there are still conflicts after the recursive merge step, Git will continue to prompt the developer to resolve them manually until they have been resolved or the merge is abandoned.
 
+# Squashing commits
+```mermaid
+graph LR
+    A[Initial Commit] --> B[Commit 1]
+    B --> C[Commit 2]
+    C --> D[Commit 3]
+    
+    subgraph Before Squashing
+        A -->|1| B
+        B -->|2| C
+        C -->|3| D
+    end
+    
+    subgraph After Squashing
+        A -->|1| E[New Squashed Commit]
+    end
+    
+    D -->|4| F
+    E -->|5| F[Updated Commit]
+```
+
+In Git, a commit squash is the process of combining multiple commits into a single commit. This is often done to create a more concise and organized Git history.
+
+When you squash commits, you take two or more existing commits and merge them into a single commit, rewriting the Git history in the process. The new commit will have a new commit message that summarizes the changes made in all of the original commits.
+
+To squash commits in Git, you can use the git rebase command with the -i option (for interactive mode). This will open up an interactive editor where you can select the commits you want to squash and edit the commit messages. Once you save and close the editor, Git will automatically squash the selected commits into a single commit.
+
+It's important to note that squashing commits can be a destructive operation, as it rewrites Git history. Therefore, it's generally recommended to only squash commits on local branches that haven't been pushed to a shared repository yet. If you do need to squash commits on a shared branch, it's best to coordinate with your team members to ensure that everyone is aware of the change and agrees with it.
+
+```mermaid
+sequenceDiagram
+    participant dev as Developer
+    participant git as Git
+
+    dev->>git: git checkout my-feature-branch
+    git->>dev: Switched to branch 'my-feature-branch'
+    dev->>git: git log --oneline
+    git->>dev: Lists the commits on the branch
+    dev->>git: git rebase -i HEAD~3
+    git->>dev: Opens an interactive editor
+    Note over dev: Select the commits to squash
+    dev->>git: Changes the first commit message
+    git->>dev: Squashes the selected commits
+    dev->>git: git log --oneline
+    git->>dev: Lists the updated commit history
+    dev->>git: git push --force origin my-feature-branch
+    git->>dev: Force pushes the updated branch
+```
+
+An overview of the steps for squashing commits can be found below:
+1. The developer checks out the branch they want to squash commits on, in this case, it's `my-feature-branch`.
+2. List the commits on the branch using `git log --oneline` to determine which commits to squash.
+3. Initiate an interactive rebase with `git rebase -i HEAD~3`, where 3 is the number of commits to include in the interactive editor. This opens up an interactive editor that allows the developer to choose which commits to squash.
+4. Select the commits to squash by changing the commands for those commits to `squash` or `s`.
+5. Edit the commit message for the new, combined commit.
+6. Save and close the editor, which triggers the squashing of the selected commits.
+7. List the updated commit history using `git log --oneline` to verify that the commits have been squashed.
+8. Force pushe the updated branch to the remote repository using `git push --force origin my-feature-branch`. This is because squashing commits changes the Git history, so the developer needs to force push the changes to the remote branch.
+
+# What does the workflow look like when working upstream?
+When working on upstream projects the basic workflow looks something like this:
+1. Clone the repo and define your git variables
+```bash
+$ gh repo clone <repo/project>
+$ git config --global user.email "<your noreply email"
+$ git config --global user.name "<your name>"
+```
+
+2. Make your changes to the feature branch. 
+
+3. Squash all changes into a single commit:
+```bash
+$ git rebase -i HEAD~5
+```
+[Reference](https://gist.github.com/lpranam/4ae996b0a4bc37448dc80356efbca7fa)
+
+4. Push changes back to the source repository/project:
+```bash
+$ git push -f
+```
+
+5. Create your PR
+
+
 # What is a git bisect?
 Git bisect is a command-line tool used to find the commit that introduced a specific bug or issue in a Git repository. It works by performing a binary search through the commit history of the repository, which involves dividing the range of commits to be searched in half repeatedly until the specific commit that introduced the issue is identified.
 
