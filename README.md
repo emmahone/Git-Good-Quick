@@ -106,6 +106,33 @@ If the changes made in the feature branch have not diverged from the main branch
 
 Once the merge is complete, the changes made in the feature branch will be incorporated into the main branch, and the developer can continue to work on new features or bug fixes in the feature branch.
 
+## What does the workflow look like when working upstream?
+When working on upstream projects the basic workflow looks something like this:
+1. Clone the repo and define your git variables
+```bash
+$ gh repo clone <repo/project>
+$ git config --global user.email "<your noreply email"
+$ git config --global user.name "<your name>"
+```
+
+2. Make your changes to the feature branch. 
+
+3. Squash all changes into a single commit:
+```bash
+$ git rebase -i HEAD~5
+```
+[Reference](https://gist.github.com/lpranam/4ae996b0a4bc37448dc80356efbca7fa)
+
+4. Push changes back to the source repository/project:
+```bash
+$ git push -f
+```
+
+5. Create your PR
+
+
+# Advanced Topics
+
 ## Three-way merging
 ```mermaid
 graph LR
