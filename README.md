@@ -156,6 +156,34 @@ If there were no conflicts, the merge can be completed immediately using the `gi
 
 # Squashing commits
 ```mermaid
+graph LR
+    A[Initial Commit] --> B[Commit 1]
+    B --> C[Commit 2]
+    C --> D[Commit 3]
+    
+    subgraph Before Squashing
+        A -->|1| B
+        B -->|2| C
+        C -->|3| D
+    end
+    
+    subgraph After Squashing
+        A -->|1| E[New Squashed Commit]
+    end
+    
+    D -->|4| F
+    E -->|5| F[Updated Commit]
+```
+
+In Git, a commit squash is the process of combining multiple commits into a single commit. This is often done to create a more concise and organized Git history.
+
+When you squash commits, you take two or more existing commits and merge them into a single commit, rewriting the Git history in the process. The new commit will have a new commit message that summarizes the changes made in all of the original commits.
+
+To squash commits in Git, you can use the git rebase command with the -i option (for interactive mode). This will open up an interactive editor where you can select the commits you want to squash and edit the commit messages. Once you save and close the editor, Git will automatically squash the selected commits into a single commit.
+
+It's important to note that squashing commits can be a destructive operation, as it rewrites Git history. Therefore, it's generally recommended to only squash commits on local branches that haven't been pushed to a shared repository yet. If you do need to squash commits on a shared branch, it's best to coordinate with your team members to ensure that everyone is aware of the change and agrees with it.
+
+```mermaid
 sequenceDiagram
     participant dev as Developer
     participant git as Git
@@ -174,13 +202,6 @@ sequenceDiagram
     dev->>git: git push --force origin my-feature-branch
     git->>dev: Force pushes the updated branch
 ```
-In Git, a commit squash is the process of combining multiple commits into a single commit. This is often done to create a more concise and organized Git history.
-
-When you squash commits, you take two or more existing commits and merge them into a single commit, rewriting the Git history in the process. The new commit will have a new commit message that summarizes the changes made in all of the original commits.
-
-To squash commits in Git, you can use the git rebase command with the -i option (for interactive mode). This will open up an interactive editor where you can select the commits you want to squash and edit the commit messages. Once you save and close the editor, Git will automatically squash the selected commits into a single commit.
-
-It's important to note that squashing commits can be a destructive operation, as it rewrites Git history. Therefore, it's generally recommended to only squash commits on local branches that haven't been pushed to a shared repository yet. If you do need to squash commits on a shared branch, it's best to coordinate with your team members to ensure that everyone is aware of the change and agrees with it.
 
 An overview of the steps for squashing commits can be found below:
 1. The developer checks out the branch they want to squash commits on, in this case, it's `my-feature-branch`.
