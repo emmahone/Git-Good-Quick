@@ -168,7 +168,7 @@ graph LR
     end
     
     subgraph After Squashing
-        A -->|1| E[New Squashed Commit]
+        E[New Squashed Commit]
     end
     
     D -->|4| F
