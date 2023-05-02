@@ -168,11 +168,11 @@ graph LR
     end
     
     subgraph After Squashing
-        A -->|1| E[New Squashed Commit]
+        E[New Squashed Commit]
     end
     
-    D -->|4| F
-    E -->|5| F[Updated Commit]
+    D -->|Squash| F[Updated Commit]
+    F -->|Push| E
 ```
 
 In Git, a commit squash is the process of combining multiple commits into a single commit. This is often done to create a more concise and organized Git history.
