@@ -18,11 +18,11 @@ graph LR
 In the flowchart above, a developer starts by making changes to the files in the working directory. Then, they add the changes they want to include in the next commit to the staging area. Once the changes are staged, the developer commits them to the local repository. Finally, the committed changes are pushed to the remote repository, where they can be reviewed and merged into the main branch of the codebase using a pull request.
 
 The Git software development process involves several stages or states, including:
-- Working Directory (Untracked): This is the state where a developer creates or modifies files in the local copy of the repository.
-- Staging Area (Local): This is the state where a developer selects which changes they want to include in the next commit.
-- Local Repository: This is the state where the committed changes are stored in the local copy of the repository.
-- Remote Repository: This is the state where the committed changes are pushed from the local repository to a remote repository, such as GitHub or GitLab.
-- Pull Request: This is the state where a developer requests that their changes be reviewed and merged into the main branch of the remote repository.
+- `Working Directory (Untracked)`: This is the state where a developer creates or modifies files in the local copy of the repository.
+- `Staging Area (Local)`: This is the state where a developer selects which changes they want to include in the next commit.
+- `Local Repository`: This is the state where the committed changes are stored in the local copy of the repository.
+- `Remote Repository`: This is the state where the committed changes are pushed from the local repository to a remote repository, such as GitHub or GitLab.
+- `Pull Request`: This is the state where a developer requests that their changes be reviewed and merged into the main branch of the remote repository.
 
 # Promoting code between states
 ```mermaid
@@ -34,11 +34,11 @@ graph LR
 In the diagram above, the changes made in the working directory are added to the staging area using the `git add` command. Once the changes are in the staging area, they are committed to the local repository using the `git commit` command. Finally, the committed changes are pushed to the remote repository using the `git push` command.
 
 The transitions between these states are below:
-- Working Directory to Staging Area: A developer adds changes to the staging area using the `git add` command.
-- Staging Area to Local Repository: A developer commits the changes in the staging area to the local repository using the `git commit` command.
-- Local Repository to Remote Repository: A developer pushes the committed changes from the local repository to the remote repository using the `git push` command.
-- Remote Repository to Pull Request: A developer creates a pull request on the remote repository to request that their changes be reviewed and merged into the main branch.
-- Pull Request to Remote Repository: After the changes are reviewed and approved, they are merged into the main branch of the remote repository.
+- `Working Directory to Staging Area`: A developer adds changes to the staging area using the `git add` command.
+- `Staging Area to Local Repository`: A developer commits the changes in the staging area to the local repository using the `git commit` command.
+- `Local Repository to Remote Repository`: A developer pushes the committed changes from the local repository to the remote repository using the `git push` command.
+- `Remote Repository to Pull Request`: A developer creates a pull request on the remote repository to request that their changes be reviewed and merged into the main branch.
+- `Pull Request to Remote Repository`: After the changes are reviewed and approved, they are merged into the main branch of the remote repository.
 
 # Working locally
 ```mermaid
@@ -54,17 +54,17 @@ stateDiagram-v2
 ```
 Working locally using Git involves a few basic steps. Here's a general overview:
 
-1. Create a local repository: To start working locally with Git, you first need to create a local repository on your computer. You can do this by creating a new directory and running the "git init" command within that directory. This will create a new repository that you can use to manage your code.
+1. `Create a local repository`: To start working locally with Git, you first need to create a local repository on your computer. You can do this by creating a new directory and running the "git init" command within that directory. This will create a new repository that you can use to manage your code.
 
-2. Create a branch: Before making any changes to your code, it's a good idea to create a new branch. This will allow you to work on your changes without affecting the main codebase. To create a new branch, use the "git checkout -b" command followed by the name of the new branch.
+2. `Create a branch`: Before making any changes to your code, it's a good idea to create a new branch. This will allow you to work on your changes without affecting the main codebase. To create a new branch, use the "git checkout -b" command followed by the name of the new branch.
 
-3. Make changes: Once you've created a new branch, you can start making changes to the code. Use your favorite text editor or integrated development environment (IDE) to edit the code files as needed.
+3. `Make changes`: Once you've created a new branch, you can start making changes to the code. Use your favorite text editor or integrated development environment (IDE) to edit the code files as needed.
 
-4. Add changes: After you've made changes to the code, you need to tell Git which files you want to include in the next commit. Use the "git add" command to stage changes for the next commit. You can either add specific files using the file name, or you can add all changes using the "git add ." command.
+4. `Add changes`: After you've made changes to the code, you need to tell Git which files you want to include in the next commit. Use the "git add" command to stage changes for the next commit. You can either add specific files using the file name, or you can add all changes using the "git add ." command.
 
-5. Commit changes: Once you've staged your changes, you can commit them to your local repository using the "git commit" command. When you commit changes, you should include a brief message that describes the changes you've made.
+5. `Commit changes`: Once you've staged your changes, you can commit them to your local repository using the "git commit" command. When you commit changes, you should include a brief message that describes the changes you've made.
 
-6. Repeat steps 3-5 as needed: Continue working on your code, making changes, staging them, and committing them as needed. You can switch between branches using the "git checkout" command, and you can view your current branch and the status of your changes using the "git status" command.
+6. `Repeat steps 3-5 as needed`: Continue working on your code, making changes, staging them, and committing them as needed. You can switch between branches using the "git checkout" command, and you can view your current branch and the status of your changes using the "git status" command.
 
 7. When you are happy with the contents of your local branch, push your changes to the remote repository. 
 
@@ -259,23 +259,21 @@ graph TD;
 
 Here's a high-level overview of the workflow for using Git bisect:
 
-1. Identify a known "good" commit: Start by identifying a commit in the Git repository that you know does not have the issue or bug you're trying to debug. You can identify this commit by checking out previous versions of the codebase or by asking other developers on your team.
+1. `Identify a known "good" commit`: Start by identifying a commit in the Git repository that you know does not have the issue or bug you're trying to debug. You can identify this commit by checking out previous versions of the codebase or by asking other developers on your team.
 
-2. Identify a known "bad" commit: Similarly, identify a commit in the repository that you know has the issue or bug you're trying to debug. This can be a commit that you recently made, or one that was reported by a user or tester.
+2. `Identify a known "bad" commit`: Similarly, identify a commit in the repository that you know has the issue or bug you're trying to debug. This can be a commit that you recently made, or one that was reported by a user or tester.
 
-3. Start the bisecting process: Use the `git bisect start` command to start the bisecting process. This tells Git that you want to find the commit that introduced the bug, and that you'll provide Git with a "good" and "bad" commit to start the search.
+3. `Start the bisecting process`: Use the `git bisect start` command to start the bisecting process. This tells Git that you want to find the commit that introduced the bug, and that you'll provide Git with a "good" and "bad" commit to start the search.
 
-4. Mark the good and bad commits: Use the `git bisect good <commit>` and `git bisect bad <commit>` commands to mark the known good and bad commits, respectively. Git will then use these commits to start the binary search.
+4. `Mark the good and bad commits`: Use the `git bisect good <commit>` and `git bisect bad <commit>` commands to mark the known good and bad commits, respectively. Git will then use these commits to start the binary search.
 
-5. Test intermediate commits: Git will check out an intermediate commit between the good and bad commits. Test this commit to determine whether it has the bug or not.
+5. `Test intermediate commits`: Git will check out an intermediate commit between the good and bad commits. Test this commit to determine whether it has the bug or not.
 
-6. Mark the commit as good or bad: Depending on whether the intermediate commit has the bug or not, use the `git bisect good` or `git bisect bad` command to tell Git whether to search in the earlier or later half of the commit history.
+6. `Mark the commit as good or bad`: Depending on whether the intermediate commit has the bug or not, use the `git bisect good` or `git bisect bad` command to tell Git whether to search in the earlier or later half of the commit history.
 
-7. Repeat testing and marking: Repeat steps 5-6 until Git identifies the commit that introduced the bug.
+7. `Repeat testing and marking`: Repeat steps 5-6 until Git identifies the commit that introduced the bug.
 
-8. End the bisecting process: Once Git identifies the commit that introduced the bug, use the `git bisect reset` command to exit the bisecting process and return to the current branch.
-
-Overall, the workflow for using Git bisect involves identifying a good and bad commit, starting the bisecting process, testing intermediate commits, and marking each commit as good or bad until Git identifies the specific commit that introduced the issue.
+8. `End the bisecting process`: Once Git identifies the commit that introduced the bug, use the `git bisect reset` command to exit the bisecting process and return to the current branch.
 
 # What is cherry-pick in git?
 Git cherry-pick is a command that allows you to apply a specific commit from one Git branch to another. It is useful when you want to bring a single change from one branch into another, without merging the entire branch.
@@ -297,18 +295,16 @@ graph TD;
 
 Here's a high-level overview of the workflow for using Git cherry-pick:
 
-1. Identify the commit to cherry-pick: Start by identifying the commit that contains the changes you want to apply to the current branch. You can use the `git log` command to find the commit ID of the desired commit.
+1. `Identify the commit to cherry-pick`: Start by identifying the commit that contains the changes you want to apply to the current branch. You can use the `git log` command to find the commit ID of the desired commit.
 
-2. Check out the target branch: Use the `git checkout` command to switch to the branch that you want to apply the commit to.
+2. `Check out the target branch`: Use the `git checkout` command to switch to the branch that you want to apply the commit to.
 
-3. Cherry-pick the commit: Use the `git cherry-pick <commit-id>` command to apply the changes from the specified commit to the current branch. You can also cherry-pick multiple commits by listing their commit IDs after the cherry-pick command.
+3. `Cherry-pick the commit`: Use the `git cherry-pick <commit-id>` command to apply the changes from the specified commit to the current branch. You can also cherry-pick multiple commits by listing their commit IDs after the cherry-pick command.
 
-4. Resolve conflicts: If there are any conflicts between the commit being cherry-picked and the changes in the current branch, Git will stop the cherry-pick process and ask you to resolve the conflicts manually. You can use tools like `git mergetool` or manually edit the conflicting files to resolve the conflicts.
+4. `Resolve conflicts`: If there are any conflicts between the commit being cherry-picked and the changes in the current branch, Git will stop the cherry-pick process and ask you to resolve the conflicts manually. You can use tools like `git mergetool` or manually edit the conflicting files to resolve the conflicts.
 
-5. Commit the changes: Once you have resolved any conflicts, use the `git commit` command to create a new commit that includes the changes from the cherry-picked commit.
+5. `Commit the changes`: Once you have resolved any conflicts, use the `git commit` command to create a new commit that includes the changes from the cherry-picked commit.
 
-6. Review the changes: Use the `git diff` command to review the changes made by the cherry-pick operation.
+6. `Review the changes`: Use the `git diff` command to review the changes made by the cherry-pick operation.
 
-7. Push the changes: If you are satisfied with the changes, use the git push command to push the changes to the remote repository and make them available to other developers.
-
-Overall, the workflow for using Git cherry-pick involves identifying the commit to cherry-pick, checking out the target branch, cherry-picking the commit, resolving any conflicts, committing the changes, reviewing the changes, and pushing the changes to the remote repository.
+7. `Push the changes`: If you are satisfied with the changes, use the git push command to push the changes to the remote repository and make them available to other developers.
