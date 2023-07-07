@@ -248,8 +248,7 @@ Using Git bisect can significantly reduce the time and effort required to find t
 # What does the git bisect workflow look like?
 ```mermaid
 graph TD;
-    A(Start)-->B{Good and Bad Commit Identified?};
-    B-- Yes -->C{Bisecting Process Started?};
+    B{Good and Bad Commit Identified?}-- Yes -->C{Bisecting Process Started?};
     C-- Yes -->D{Test Intermediate Commit};
     D-- Bug Found -->E{Mark Commit as Bad};
     E-->B;
@@ -283,8 +282,7 @@ Using Git cherry-pick, you can apply the changes made in a specific commit to th
 # Cherry-pick workflow
 ```mermaid
 graph TD;
-    A(Start)-->B{Identify Commit to Cherry-pick};
-    B-- Commit Identified -->C{Check Out Target Branch};
+    B{Identify Commit to Cherry-pick}-- Commit Identified -->C{Check Out Target Branch};
     C-- Branch Checked Out -->D{Cherry-pick the Commit};
     D-- Conflicts Found -->E{Resolve Conflicts};
     E-- Conflicts Resolved -->F{Commit Changes};
